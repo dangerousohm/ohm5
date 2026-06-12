@@ -1,6 +1,7 @@
 name: Auto 50 Commits
 
-on: [push]
+on:
+  workflow_dispatch:
 
 jobs:
   auto-commit:
@@ -9,15 +10,15 @@ jobs:
       contents: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Create 50 Commits
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           for i in {1..50}; do
-            echo "Commit $i" >> auto_commits.txt
+            echo "Auto commit $i" >> auto_commits.txt
             git add auto_commits.txt
             git commit -m "Automated commit $i"
           done
-          git push
+          git push origin HEAD
